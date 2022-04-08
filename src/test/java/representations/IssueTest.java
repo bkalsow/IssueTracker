@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import main.java.representations.Comment;
 import main.java.representations.Issue;
 import main.java.representations.Priority;
+import main.java.representations.Status;
 import main.java.representations.StoryType;
 import main.java.representations.User;
 
@@ -24,7 +25,7 @@ public class IssueTest
     private String id = "TST-001";
     private StoryType type = StoryType.STORY;
     private String description = "Write tests to verify issues work correctly.";
-    private String status = "TODO";
+    private Status status = Status.TODO;
     private Priority priority = Priority.REGULAR;
     private ArrayList<Comment> comments;
     private Issue issue = new Issue(title, id, type, description, status, priority, reporter, new Date());
@@ -125,8 +126,8 @@ public class IssueTest
     @Test
     void testSetStatus() 
     {
-        issue.setStatus("In Progress");
-        assertTrue(issue.getStatus().equals("In Progress"));
+        issue.setStatus(Status.INPROGRESS);
+        assertTrue(issue.getStatus().equals(Status.INPROGRESS));
     }
 
     @Test

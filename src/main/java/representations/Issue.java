@@ -9,7 +9,7 @@ public class Issue
     private String title;
     private String id;
     private StoryType type;
-    private String status;
+    private Status status;
     private String description;
     private Priority priority;
     private List<Comment> comments;
@@ -30,7 +30,7 @@ public class Issue
      * @param createDate
      */
     public Issue(String title, String id, StoryType type, String description,
-        String status, Priority priority, User creator, Date createDate) 
+        Status status, Priority priority, User creator, Date createDate) 
     {
         this.title = title;
         this.id = id;
@@ -211,14 +211,14 @@ public class Issue
     /**
      * @return the status
      */
-    public String getStatus() {
+    public Status getStatus() {
         return status;
     }
 
     /**
      * @param status the status to set
      */
-    public void setStatus(String status) {
+    public void setStatus(Status status) {
         this.status = status;
         this.updatedDate = new Date();
     }
