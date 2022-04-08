@@ -96,6 +96,17 @@ public class Issue
     }
 
     /**
+     * @param newComment the comment to add to this issue
+     */
+    public void addNewComment(Comment newComment)
+    {
+        if(this.comments == null)
+            this.comments = new ArrayList<>();
+        this.comments.add(newComment);
+        this.updatedDate = new Date();
+    }
+
+    /**
      * @return the priority
      */
     public Priority getPriority() {
@@ -154,6 +165,17 @@ public class Issue
     public void setWatchers(List<User> watchers) {
         this.watchers = watchers;
         this.updatedDate = new Date();
+    }
+
+    /**
+     * @param watchers the watchers to set
+     */
+    public void toggleWatching(User watcher) {
+        if(watchers.contains(watcher))
+            watchers.remove(watcher);
+        else
+            watchers.add(watcher);
+        
     }
 
     /**

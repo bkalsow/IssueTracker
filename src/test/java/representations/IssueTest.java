@@ -1,5 +1,6 @@
 package test.java.representations;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
@@ -16,16 +17,17 @@ import main.java.representations.User;
 
 public class IssueTest 
 {
-    Issue issue;
-    User assignee = new User("john", "doe", "jdoe", "jdoe@foo.com", 0);
-    User reporter = new User("Mary", "Sue", "msue", "msue@foo.com", 1);
-    String title = "Write Tests";
-    String id = "TST-001";
-    StoryType type = StoryType.STORY;
-    String description = "Write tests to verify issues work correctly.";
-    String status = "TODO";
-    Priority priority = Priority.REGULAR;
-    ArrayList<Comment> comments;
+    private User assignee = new User("john", "doe", "jdoe", "jdoe@foo.com", 0);
+    private User reporter = new User("Mary", "Sue", "msue", "msue@foo.com", 1);
+    private User watcher = new User("Steve", "Observer", "SObs", "obs@bar.com", 2);
+    private String title = "Write Tests";
+    private String id = "TST-001";
+    private StoryType type = StoryType.STORY;
+    private String description = "Write tests to verify issues work correctly.";
+    private String status = "TODO";
+    private Priority priority = Priority.REGULAR;
+    private ArrayList<Comment> comments;
+    private Issue issue = new Issue(title, id, type, description, status, priority, reporter, new Date());
 
     @Before
     public void init()
@@ -52,7 +54,7 @@ public class IssueTest
     @Test
     void testGetDescription() 
     {
-        assertTrue(issue.getComments().equals(comments));
+        assertTrue(issue.getDescription().equals(description));
     }
 
     @Test
@@ -93,45 +95,59 @@ public class IssueTest
     }
 
     @Test
-    void testSetComments() 
+    void testAddComment() 
     {
         issue.addNewComment(new Comment(assignee.getUserID(), "Tests Finished!"));
-        assertTrue(issue.getComments().get(1).getCommentBody().equals("Tests Finished!"));
+        assertTrue(issue.getComments().get(0).getCommentBody().equals("Tests Finished!"));
     }
 
     @Test
     void testSetDescription() 
     {
         issue.setDescription("New Description");
+        assertTrue(issue.getDescription().equals("New Description"));
     }
 
     @Test
     void testSetPriority() 
     {
-
+        issue.setPriority(Priority.HIGH);
+        assertTrue(issue.getPriority() == Priority.HIGH);
     }
 
     @Test
     void testSetReporter() 
     {
-
+        issue.setReporter(assignee);
+        assertTrue(issue.getReporter().getUserID() == assignee.getUserID());
     }
 
     @Test
-    void testSetState() 
+    void testSetStatus() 
     {
-
+        issue.setStatus("In Progress");
+        assertTrue(issue.getStatus().equals("In Progress"));
     }
 
     @Test
     void testSetTitle() 
     {
-
+        issue.setTitle("foo");
+        assertTrue(issue.getTitle().equals("foo"));
     }
 
     @Test
-    void testSetWatchers() 
+    void testToggleWatchingAddsNewWatcher() 
     {
+        issue.toggleWatching(watcher);
+        assertTrue(issue.getWatchers().contains(watcher));
+    }
 
+    @Test
+    void testToggleWatchingRemovesExistingWatcher() 
+    {
+        issue.toggleWatching(watcher);
+        issue.toggleWatching(watcher);
+        assertFalse(issue.getWatchers().contains(watcher));
     }
 }
